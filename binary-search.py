@@ -36,3 +36,39 @@ if __name__ == "__main__":
     print(binary_search_iterative(nums, 2))   # Output: None
     print(binary_search_iterative(nums, 11))  # Output: 5
     print(binary_search_iterative(nums, 1))   # Output: 0
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    Recursive binary search on a list sorted in descending order.
+
+    Parameters:
+        sortedDescList (list): A list of elements sorted in descending order.
+        target (int/any): The element to search for.
+        low (int): Lower index (inclusive).
+        high (int): Upper index (inclusive).
+
+    Returns:
+        int or None: The index of the target if found, otherwise None.
+    """
+def binary_search_recursive(sortedDescList, target, low, high):
+    if low > high:
+        return None  # Base case: not found
+
+    mid = (low + high) // 2
+
+    if sortedDescList[mid] == target:
+        return mid
+    elif target > sortedDescList[mid]:
+        # If target is larger, it must be on the LEFT (since list is descending)
+        return binary_search_recursive(sortedDescList, target, low, mid - 1)
+    else:
+        # If target is smaller, it must be on the RIGHT
+        return binary_search_recursive(sortedDescList, target, mid + 1, high)
+
+# Example usage
+if __name__ == "__main__":
+    sortedDescList = [20, 15, 11, 9, 7, 5, 3, 1]  # sorted in descending order
+
+    print(binary_search_recursive(sortedDescList, 7, 0, len(sortedDescList) - 1))   # ➜ 4
+    print(binary_search_recursive(sortedDescList, 21, 0, len(sortedDescList) - 1))  # ➜ None
+    print(binary_search_recursive(sortedDescList, 20, 0, len(sortedDescList) - 1))  # ➜ 0
+    print(binary_search_recursive(sortedDescList, 1, 0, len(sortedDescList) - 1))   # ➜ 7
