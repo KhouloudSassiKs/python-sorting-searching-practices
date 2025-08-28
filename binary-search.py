@@ -73,8 +73,58 @@ if __name__ == "__main__":
     print(binary_search_recursive(sortedDescList, 20, 0, len(sortedDescList) - 1))  # ➜ 0
     print(binary_search_recursive(sortedDescList, 1, 0, len(sortedDescList) - 1))   # ➜ 7
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-    Finds an approximate x such that func(x) is close to the target value.
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    Finds an approximate root x such that func(x) ≈ 0 using binary search.
+
+    Parameters:
+        func: The continuous function to evaluate.
+        left: Left endpoint of the search interval.
+        right: Right endpoint of the search interval.
+        epsilon: Acceptable difference between func(x) and 0.
+
+    Returns:
+        Approximate root x where func(x) ≈ 0.
+    """
+# Python program to find the value of 'x' where f(x) = 0 using Binary Search
+import numpy as np
+
+# Define a continuous function 'f'
+# Example: f(x) = x^6 - 3x^4 + 4x^3 - 1
+def f(x):
+    return x**6 - 3 * x**4 + 4 * x**3 - 1
+
+# Binary Search Function to find root
+def binary_search(func, left, right, epsilon):
+    while right - left > epsilon:
+        middle = (left + right) / 2
+
+        # If function value is close enough to zero, return the midpoint
+        if np.isclose(func(middle), 0, atol=epsilon):
+            return middle
+
+        # Decide which half contains the root
+        # If f(middle) > 0, root lies in [left, middle]; else in [middle, right]
+        if func(middle) > 0:
+            right = middle
+        else:
+            left = middle
+
+    # Return midpoint as best approximation if exact zero not found
+    return (left + right) / 2
+
+# -----------------------------
+# Parameters for the search
+epsilon = 1e-6  # precision of approximation
+start = -5      # left boundary of search interval
+end = 5         # right boundary of search interval
+
+# Perform binary search to find root
+result = binary_search(f, start, end, epsilon)
+
+print(f"x ≈ {result}, f(x) ≈ {f(result)}")
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    Finds an approximate x such that func(x) is close to a non null target value.
 
     Parameters:
         func: The function to evaluate.
