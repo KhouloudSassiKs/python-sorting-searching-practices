@@ -72,3 +72,60 @@ if __name__ == "__main__":
     print(binary_search_recursive(sortedDescList, 21, 0, len(sortedDescList) - 1))  # ➜ None
     print(binary_search_recursive(sortedDescList, 20, 0, len(sortedDescList) - 1))  # ➜ 0
     print(binary_search_recursive(sortedDescList, 1, 0, len(sortedDescList) - 1))   # ➜ 7
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    Finds an approximate x such that func(x) is close to the target value.
+
+    Parameters:
+        func: The function to evaluate.
+        target: The desired target value of func(x).
+        left: Left endpoint of the search interval.
+        right: Right endpoint of the search interval.
+        precision: Acceptable difference between func(x) and target.
+
+    Returns:
+        Approximate x such that func(x) ≈ target.
+    """
+# Python program to find the x value for which a given function reaches a target using Binary Search
+import numpy as np
+
+# Define a continuous function 'f'
+def f(x):
+    return x**4 - x**2 - 10
+
+# Binary search function to find x such that f(x) ≈ target
+def binary_search(func, target, left, right, precision):
+    
+    while (right - left) / 2 > precision:
+        mid = (left + right) / 2
+
+        # If the function value is close enough to the target, return mid
+        if np.isclose(func(mid), target, atol=precision):
+            return mid
+
+        # Determine which half of the interval contains the target
+        # Explanation of the “direction” logic:
+        # - func(left) - target: direction from left to target
+        # - func(mid) - target: direction from mid to target
+        # If these directions are opposite, the target is between left and mid
+        #      left --- target --- mid --- right
+        # Else, the target is between mid and right
+        #      left --- mid --- target --- right
+        if (func(left) - target) * (func(mid) - target) < 0:
+            right = mid  # target lies in [left, mid]
+        else:
+            left = mid   # target lies in [mid, right]
+
+    # Return midpoint as best approximation if exact match not found
+    return (left + right) / 2
+
+# -----------------------------
+# Example usage
+epsilon = 1e-6  # precision of the approximation
+target = 50      # target value to find
+start = -5       # left boundary of search interval
+end = 54         # right boundary of search interval
+
+result = binary_search(f, target, start, end, epsilon)
+
+print(f"x ≈ {result}, f(x) ≈ {f(result)}")
