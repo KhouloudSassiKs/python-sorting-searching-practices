@@ -37,3 +37,26 @@ def search_dec_rotated(nums, target):
                 right = mid - 1
 
     return -1
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Execution examples:
+"""
+# Rotated descending array, target in the rotated half
+print(search_dec_rotated([4, 3, 2, 1, 8, 7, 6, 5], 1))   # Expected output: 3
+
+# Non-rotated descending array, target exists
+print(search_dec_rotated([9, 8, 7, 6, 5, 4, 3, 2, 1], 4))  # Expected output: 5
+
+# Descending array, target not in the list
+print(search_dec_rotated([5, 4, 3, 2, 1], 8))  # Expected output: -1
+
+# Rotated descending array, target at rotation point
+print(search_dec_rotated([3, 2, 1, 9, 8, 7, 6, 5, 4], 9))  # Expected output: 3
+
+# Single-element array, target matches
+print(search_dec_rotated([10], 10))  # Expected output: 0
+
+# Single-element array, target not found
+print(search_dec_rotated([10], 5))  # Expected output: -1
+
+# Rotated descending array, target at the very end
+print(search_dec_rotated([7, 6, 5, 4, 3, 2, 1, 9, 8], 8))  # Expected output: 8
