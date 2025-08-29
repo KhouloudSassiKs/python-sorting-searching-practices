@@ -60,3 +60,51 @@ print(search_dec_rotated([10], 5))  # Expected output: -1
 
 # Rotated descending array, target at the very end
 print(search_dec_rotated([7, 6, 5, 4, 3, 2, 1, 9, 8], 8))  # Expected output: 8
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    Find the first and last positions of a target in a sorted array.
+
+    Args:
+        nums (List[float]): Sorted array (ascending).
+        target (float): Value to search for.
+
+    Returns:
+        List[int]: [first_index, last_index] if target exists, otherwise [-1, -1].
+
+    Approach:
+        Uses a modified recursive binary search to find boundaries efficiently.
+        - `find_first=True` finds the first occurrence of target.
+        - `find_first=False` finds the index after the last occurrence, then subtracts 1.
+    """
+def get_first_last_pos(nums, target):
+    def binary_search(left, right, find_first):
+        """Recursive binary search to find boundary index."""
+        if left > right:
+            return left
+
+        mid = (left + right) // 2
+
+        # If searching first occurrence, or target is less than mid, search left
+        if nums[mid] > target or (find_first and nums[mid] == target):
+            return binary_search(left, mid - 1, find_first)
+        # Otherwise, search right
+        else:
+            return binary_search(mid + 1, right, find_first)
+
+    # Find first and last occurrence
+    first = binary_search(0, len(nums) - 1, True)
+    last = binary_search(first, len(nums) - 1, False) - 1
+
+    # Validate existence
+    if first <= last:
+        return [first, last]
+    return [-1, -1]
+
+
+# Example usage / tests
+
+print(get_first_last_pos([3.14, 3.14, 6.28, 9.42], 3.14))  # [0, 1]
+print(get_first_last_pos([3.14, 3.14, 6.28, 9.42], 4.13))  # [-1, -1]
+print(get_first_last_pos([], 3.14))                        # [-1, -1]
+print(get_first_last_pos([1,2,2,2,3,4], 2))               # [1, 3]
+print(get_first_last_pos([1,2,2,2,3,4], 3))               # [4, 4]
