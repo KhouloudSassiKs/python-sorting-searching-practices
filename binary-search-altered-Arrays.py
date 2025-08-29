@@ -108,3 +108,38 @@ print(get_first_last_pos([3.14, 3.14, 6.28, 9.42], 4.13))  # [-1, -1]
 print(get_first_last_pos([], 3.14))                        # [-1, -1]
 print(get_first_last_pos([1,2,2,2,3,4], 2))               # [1, 3]
 print(get_first_last_pos([1,2,2,2,3,4], 3))               # [4, 4]
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    Find the index where the target should be inserted in a sorted array.
+    If the target already exists, returns the index of its first occurrence.
+    Otherwise, returns the index where it can be inserted to maintain sorted order.
+
+    Args:
+        nums (List[int]): A sorted array (ascending).
+        target (int): Value to insert.
+
+    Returns:
+        int: Index where target should be inserted.
+    """
+
+def insert_position(nums, target):
+    left, right = 0, len(nums)
+    
+    while left < right:
+        mid = (left + right) // 2
+        if nums[mid] == target:
+            return mid
+        # Search left half including mid if target is smaller
+        if target < nums[mid]:
+            right = mid
+        else:  # Search right half
+            left = mid + 1
+
+    return left
+
+
+# Example usage / tests
+print(insert_position([1, 2, 3, 3, 5], 3))  # Expected output: 2
+print(insert_position([1, 2, 3, 3, 5], 4))  # Expected output: 4
+print(insert_position([1, 3, 5, 7, 9], 10)) # Expected output: 5
+print(insert_position([1, 3, 5, 7, 9], 0))  # Expected output: 0
+print(insert_position([], 5))               # Expected output: 0
