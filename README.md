@@ -14,10 +14,6 @@ The exercises are inspired by problems from **CodeSignal**, but all code here is
   - Linear search
   - Binary search
 - **Sorting**
-  - Bubble sort
-  - Insertion sort
-  - Selection sort
-  - Merge sort
   - Quick sort
 
 ---
